@@ -28,6 +28,31 @@ class DynamicForm extends React.Component {
 		}
 	}
 
+	componentDidMount() {
+		let keys = [
+			
+				[0], [1], [3], [4]
+			
+		]
+
+		let obj = {}
+		obj.opcaoReceber = [null, null, null]
+		obj.ramal = ["", "", [], ""]
+		obj.telefone =  ["55 212111", "44 323232", [], "5454 562323"]
+		obj.tipoTelefones =  ["Padrão", "Celular", "Entrega"]
+		console.log(keys)
+		console.log(obj)
+		console.log('Merged values:', keys.map((key) => {
+			let object = {
+				opcao: obj.opcaoReceber[key],
+				city: obj.ramal[key],
+				telefone: obj.telefone[key],
+				tipoTelefones: obj.tipoTelefones[key]
+			}
+			return object
+		}));
+	}
+
 	handleFormChange = changedFields => {
 		//console.log(changedFields)
 	  };

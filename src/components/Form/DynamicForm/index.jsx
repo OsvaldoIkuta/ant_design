@@ -1,5 +1,6 @@
-import { Form, Input, Icon, Button, Row, Col } from 'antd';
+import { Form, Input, Icon, Button, Row, Col, Select, } from 'antd';
 const Group = Input.Group;
+const Option = Select.Option;
 
 let id = 0;
 
@@ -46,12 +47,14 @@ class DynamicFieldSet extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const { keys, names, cities } = values;
+                const { keys, names, cities, tipoTelefone } = values;
                 console.log('Received values of form: ', values);
+                console.log(keys)
                 console.log('Merged values:', keys.map((key) => {
                     let object = {
                         name: names[key],
-                        city: cities[key]
+                        city: cities[key],
+                        tipoTelefone: tipoTelefone[key]
                     }
                     return object
                 }));
@@ -87,7 +90,7 @@ class DynamicFieldSet extends React.Component {
                             {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
                             label={index === 0 ? 'Passengers' : ''}
                             required={false}
-                            
+
                         >
                             {getFieldDecorator(`names[${k}]`, {
                                 validateTrigger: ['onChange', 'onBlur'],
@@ -105,9 +108,35 @@ class DynamicFieldSet extends React.Component {
                     <Col span={10}>
                         <Form.Item
                             {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                            label={index === 0 ? 'Passengers' : ''}
+                            required={false}
+                        >
+                            {getFieldDecorator(`tipoTelefone[${k}]`, {
+                                validateTrigger: ['onChange', 'onBlur'],
+                                initialValue: "lucy",
+                                rules: [
+                                    {
+                                        required: true,
+                                        whitespace: true,
+                                        message: "Please input passenger's name or delete this field.",
+                                    },
+                                ],
+                            })(
+                                <Select>
+                                    <Option value="jack">Jack</Option>
+                                    <Option value="lucy">Lucy</Option>
+                                    <Option value="Yiminghe">yiminghe</Option>
+                                </Select>
+                            )}
+                        </Form.Item>
+
+                    </Col>
+
+                    <Col span={10}>
+                        <Form.Item
+                            {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
                             label={index === 0 ? 'Cities' : ''}
                             required={false}
-                            key={k}
                         >
                             {getFieldDecorator(`cities[${k}]`, {
                                 validateTrigger: ['onChange', 'onBlur'],
